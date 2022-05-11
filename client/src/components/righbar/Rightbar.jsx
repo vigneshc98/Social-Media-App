@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { Add, Remove } from '@mui/icons-material';
 
-export const Rightbar = ({user}) => {   //{user} from Profile.jsx
+export const Rightbar = ({user}) => {   //{user} from Profile.jsx, here user if searched user ie., profile/:user
 
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -16,7 +16,7 @@ export const Rightbar = ({user}) => {   //{user} from Profile.jsx
   const [friends, setFriends] = useState([]);
   const [followed, setFollowed] = useState(currentUser.followings.includes(user?._id));
 
-  console.log(currentUser.followings.includes(user?._id));
+  // console.log(currentUser.followings.includes(user?._id));
 
   useEffect(() => {
     setFollowed(currentUser.followings.includes(user?._id));
@@ -25,21 +25,24 @@ export const Rightbar = ({user}) => {   //{user} from Profile.jsx
 
   useEffect(() => {
     const fetchFriends = async () => {
-      try {
-        const friendList = await axios.get(`http://localhost:8800/api/user/friends/${user._id}`);
-        setFriends(friendList.data);
-      } catch (error) {
-        console.log(error);
+      if(user?._id!==undefined){
+        try {
+          const friendList = await axios.get(`http://localhost:8800/api/user/friends/${user._id}`);
+          setFriends(friendList.data);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
       fetchFriends();
   }, [user]);
 
   const handleFollowClick = async () => {
-    console.log(friends);
+    // console.log(friends);
     try {
       if(followed){
         await axios.put(`http://localhost:8800/api/user/${user._id}/unfollow`,{userId:currentUser._id});
+        await axios.delete(`http://localhost:8800/api/conversation/delete/${user._id}/${currentUser._id}`);
         dispatch({type:"UNFOLLOW", payload:user._id})
       }else{
         await axios.put(`http://localhost:8800/api/user/${user._id}/follow`,{userId:currentUser._id});

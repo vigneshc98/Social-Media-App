@@ -19,10 +19,8 @@ export const Topbar = () => {
     const handleSearchClick = async () => {
         
         if(search.current.value !==''){
-            console.log('inside search:',search.current.value);
             try {
                  const user = await axios.get(`http://localhost:8800/api/user?username=${search.current.value}`);
-                 console.log(user);
                  navigate(`/${search.current.value}`);
             } catch (error) {
                  navigate(`/${search.current.value}`);
@@ -55,8 +53,10 @@ export const Topbar = () => {
                         <span className="topbarIconBadge">1</span>
                     </div>
                     <div className="topbarIconItem">
+                        <Link to='/messenger'>
                         <Chat/>
                         <span className="topbarIconBadge">2</span>
+                        </Link>
                     </div>
                     <div className="topbarIconItem">
                         <Notifications/>

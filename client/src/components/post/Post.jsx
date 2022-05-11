@@ -7,7 +7,6 @@ import {format} from 'timeago.js';
 import {Link} from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
-
 export const Post = ({post}) => {
 
   const PUBLIC_FOLDER = process.env.REACT_APP_PUBLIC_FOLDER;

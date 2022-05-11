@@ -19,19 +19,35 @@ const AuthReducer = (state, action) => {
                 error:action.payload
             };
         case "FOLLOW" :
+
+            const followTemp = localStorage.getItem('c_user');
+            let followUser = JSON.parse(followTemp);
+            followUser.followings.push(action.payload);
+            followUser.followings = [...new Set(followUser.followings)];
+            localStorage.setItem('c_user', JSON.stringify(followUser));
+
             return {
                 ...state,
                 user:{
                     ...state.user,
-                    followings:[...state.user.followings, action.payload]
+                    // followings:[...state.user.followings, action.payload]
+                    followings: followUser.followings
                 }
             };
         case "UNFOLLOW" :
+
+            const unfollowtemp = localStorage.getItem('c_user');
+            let unfollowUser = JSON.parse(unfollowtemp);
+            const index = unfollowUser.followings.indexOf(action.payload);
+            index>=0 && unfollowUser.followings.splice(index,1);
+            localStorage.setItem('c_user', JSON.stringify(unfollowUser));
+
             return {
                 ...state,
                 user:{
                     ...state.user,
-                    followings: state.user.followings.filter((following)=> following !== action.payload)    
+                    // followings: state.user.followings.filter((following)=> following !== action.payload)  
+                    followings: unfollowUser.followings
                 }
             };
         default:

@@ -51,7 +51,7 @@ export default function Register() {
             <input placeholder="Password" className="loginInput" type="password" ref={password} required minLength="6" />
             <input placeholder="Password Again" className="loginInput" type="password" ref={passwordAgain} required/>
             <button className="loginButton" type="submit">Sign Up</button>
-            <button className="loginRegisterButton">
+            <button className="loginRegisterButton" onClick={()=>navigate('/login')}>
               Log into Account
             </button>
           </form>

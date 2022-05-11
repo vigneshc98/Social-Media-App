@@ -9,6 +9,8 @@ const multer = require('multer');
 const userRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/posts');
+const conversationRouter = require('./routes/conversations');
+const messageRouter = require('./routes/messages');
 const path = require('path');
 
 dotenv.config();
@@ -59,6 +61,9 @@ app.use(morgan('common'));
 app.use('/api/user',userRouter);
 app.use('/api/auth',authRouter);
 app.use('/api/post',postRouter);    
+app.use('/api/conversation',conversationRouter);
+app.use('/api/message',messageRouter);
+
 
 app.listen(8800, ()=>{
     console.log('Backed server is running');
